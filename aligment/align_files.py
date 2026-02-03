@@ -1,3 +1,5 @@
+import os
+
 def create_file_pairs(dir_en, dir_zh):
     """
     在兩個資料夾中尋找序號從 001 到 038 的對應檔案，
@@ -39,7 +41,7 @@ def create_file_pairs(dir_en, dir_zh):
 
 
 
-def split_sentences_spacy(text, lang='en'):
+def split_sentences_spacy(nlp_en,nlp_zh,text, lang='en'):
     """使用 Spacy 進行斷句"""
     if not text or not text.strip():
         return []
@@ -52,7 +54,7 @@ def split_sentences_spacy(text, lang='en'):
     # 過濾掉過短的句子或純符號
     return [sent.text.strip() for sent in doc.sents if len(sent.text.strip()) > 1]
 
-def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,align_sentences_function):
+def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,align_sentences_function,model,device):
     """
     執行分層對齊：章節 -> 段落 -> 句子
 
@@ -73,7 +75,9 @@ def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,alig
     print("Stage 1: Aligning Paragraphs...")
     # 直接複用對齊函數，輸入是段落列表
     # 段落合併通常不會超過 3 段，所以 window 設小一點節省時間
-    aligned_paragraphs = align_sentences_extended_gpu(
+    aligned_paragraphs = align_sentences_function(
+        model,
+        device,
         en_paragraphs,
         zh_paragraphs,
         threshold=0.50, # 段落相似度通常比句子低一點，因為雜訊多，設低一點
@@ -105,6 +109,8 @@ def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,alig
         # 在這個小範圍內進行句對齊
         # 這裡需要高精度，threshold 設高，並開啟 1:4 合併
         sents_pairs = align_sentences_function(
+            model,
+            device,
             sents_en,
             sents_zh,
             threshold=0.65,

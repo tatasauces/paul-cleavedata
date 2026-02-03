@@ -1,4 +1,9 @@
-def align_sentences_extended(en_sentences, zh_sentences, threshold=0.60, max_merge_window=4):
+import torch
+from sentence_transformers import util # <-- 修改點 1：在這裡加入 import
+
+def align_sentences_extended(model,device,en_sentences, zh_sentences, threshold=0.60, max_merge_window=4):
+    device = device # 為了配合gpu 版本
+    
     """
     支援 1:N 和 N:1 (N最大為 max_merge_window) 的合併測試，以及 2:2 交叉亂序 (Swap)。
     預設 max_merge_window=4，即支援 1:4 和 4:1。

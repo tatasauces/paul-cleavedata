@@ -22,21 +22,22 @@ from sentence_transformers import SentenceTransformer, util
 
 # 將 LaBSE 模型搬移到 GPU ---
 print("Loading LaBSE...")
-model_labse = SentenceTransformer('sentence-transformers/LaBSE')
-model_labse.to(device) # 關鍵：移動模型權重到 GPU
+model = SentenceTransformer('sentence-transformers/LaBSE')
+model.to(device) # 關鍵：移動模型權重到 GPU
 
 # --------------------------------------------------------
 from align_files import create_file_pairs,split_sentences_spacy,process_chapter_alignment
 
 # 對齊段落、語句是否使用GPU
 if device == "cuda":
-    # 使用CPU
-    from align_sentences_extended import align_sentences_extended
-    align_sentences = align_sentences_extended
-else:
     #使用GPU
     from align_sentences_extended_gpu import align_sentences_extended_gpu
     align_sentences = align_sentences_extended_gpu
+else:
+    # 使用CPU
+    from align_sentences_extended import align_sentences_extended
+    align_sentences = align_sentences_extended
+    
 
 
 
@@ -62,4 +63,12 @@ if __name__ == "__main__":
 
     for i, (en_chapter_path, zh_chapter_path) in enumerate(book_chapter_pairs):
         output_file_name = os.path.join(dir_path, f'aligned_ch{i}.jsonl')
-        process_chapter_alignment(en_chapter_path, zh_chapter_path, output_file_name, align_sentences)
+        process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,align_sentences_function,model)
+        process_chapter_alignment(
+            en_chapter_path=en_chapter_path, 
+            zh_chapter_path=zh_chapter_path, 
+            output_path=output_file_name, 
+            align_sentences_function=align_sentences,
+            model= model,
+            device=device
+        )

@@ -1,10 +1,13 @@
-def align_sentences_extended_gpu(en_sentences, zh_sentences, threshold=0.60, max_merge_window=4):
+import torch
+from sentence_transformers import util # <-- 修改點 1：在這裡加入 import
+
+def align_sentences_extended_gpu(model,device,en_sentences, zh_sentences, threshold=0.60, max_merge_window=4):
     aligned_pairs = []
 
     # --- 修改點 D: 確保 encode 產出在 GPU 上的 Tensor ---
     # convert_to_tensor=True 會自動根據模型所在的 device 產出 tensor
-    en_embeddings = model_labse.encode(en_sentences, convert_to_tensor=True, device=device)
-    zh_embeddings = model_labse.encode(zh_sentences, convert_to_tensor=True, device=device)
+    en_embeddings = model.encode(en_sentences, convert_to_tensor=True, device=device)
+    zh_embeddings = model.encode(zh_sentences, convert_to_tensor=True, device=device)
 
     i = 0
     j = 0
@@ -20,7 +23,7 @@ def align_sentences_extended_gpu(en_sentences, zh_sentences, threshold=0.60, max
                 combined_zh_text = "".join(zh_sentences[j : j+k])
 
                 # --- 修改點 E: 讓動態編碼也在 GPU 進行 ---
-                emb_comb_zh = model_labse.encode(combined_zh_text, convert_to_tensor=True, device=device, show_progress_bar=False)
+                emb_comb_zh = model.encode(combined_zh_text, convert_to_tensor=True, device=device, show_progress_bar=False)
 
                 # util.cos_sim 在 GPU tensor 上運算極快
                 sim = util.cos_sim(en_embeddings[i], emb_comb_zh).item() # item() 取回數值到 CPU 做邏輯判斷
@@ -35,7 +38,7 @@ def align_sentences_extended_gpu(en_sentences, zh_sentences, threshold=0.60, max
                 combined_en_text = " ".join(en_sentences[i : i+k])
 
                 # --- 修改點 E (同上) ---
-                emb_comb_en = model_labse.encode(combined_en_text, convert_to_tensor=True, device=device, show_progress_bar=False)
+                emb_comb_en = model.encode(combined_en_text, convert_to_tensor=True, device=device, show_progress_bar=False)
 
                 sim = util.cos_sim(emb_comb_en, zh_embeddings[j]).item()
 
