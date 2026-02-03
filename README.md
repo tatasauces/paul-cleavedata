@@ -1,7 +1,11 @@
-# Flask Web App Starter
+chapter -> paragraph -> sentence
 
-A Flask starter template as per [these docs](https://flask.palletsprojects.com/en/3.0.x/quickstart/#a-minimal-application).
+EN:
+ - chapter(rule based)
+ - paragraph(rule based)
+ - sentence(model based)
 
-## Getting Started
-
-Previews should run automatically when starting a workspace.
+ZH:
+ - chapter(download form)
+ - paragraph(rule based)
+ - sentence(model based)

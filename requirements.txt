@@ -1,6 +1,5 @@
-# Dev environment
-pip
-autopep8
-
-# App
-flask
+pdfplumber
+collections
+spacy
+sentence_transformers
+torch
