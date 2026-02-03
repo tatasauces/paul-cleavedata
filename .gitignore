@@ -2,3 +2,4 @@
 .idx
 GEMINI.md
 .env
+__pycache__

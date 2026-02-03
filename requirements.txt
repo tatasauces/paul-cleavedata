@@ -1,5 +1,4 @@
 pdfplumber
-collections
 spacy
 sentence_transformers
 torch
