@@ -107,7 +107,7 @@ def process_chapter_alignment(nlp_en,nlp_zh,en_chapter_path, zh_chapter_path, ou
         p_zh_text = para_pair['zh']
 
         # 使用 Spacy 斷句
-        sents_en = split_sentences_spacy(nlp_en,nlp_zhp_en_text, 'en')
+        sents_en = split_sentences_spacy(nlp_en,nlp_zh,p_en_text, 'en')
         sents_zh = split_sentences_spacy(nlp_en,nlp_zh,p_zh_text, 'zh')
 
         # 如果任一方斷句後為空，跳過
