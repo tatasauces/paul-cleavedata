@@ -1,6 +1,10 @@
 import pdfplumber
 import os
 import re
+import logging
+
+# 抑制 pdfminer.pdffont 的警告訊息
+logging.getLogger('pdfminer.pdffont').setLevel(logging.ERROR)
 
 # ==========================================
 # 1. 配置區域 (Configuration)
@@ -117,10 +121,7 @@ def get_skip_count(filename):
 
     return DEFAULT_SKIP_COUNT
 
-def process_all_files():
-    # 建立輸出目錄
-    if not os.path.exists(OUTPUT_FOLDER):
-        os.makedirs(OUTPUT_FOLDER)
+def process_all_files(INPUT_FOLDER,OUTPUT_FOLDER):
 
     # 取得 PDF 檔案列表並排序
     pdf_files = [f for f in os.listdir(INPUT_FOLDER) if f.lower().endswith('.pdf')]
@@ -183,11 +184,11 @@ if __name__ == "__main__":
     # 請確保當前目錄下有 'input_pdfs' 資料夾並放入 PDF
 
     # 輸入與輸出資料夾
-    INPUT_FOLDER = r"/home/user/paul-cleavedata/BOOK/PAUL CLEAVE_ZH"
+    INPUT_FOLDER = r"/paul-cleavedata/BOOK/PAUL CLEAVE_ZH"
     OUTPUT_FOLDER = "output_text_ZH" # 輸出的 TXT 資料夾名稱
 
-    if os.path.exists(INPUT_FOLDER):
-        process_all_files()
-        print("\n所有檔案處理完成！")
-    else:
-        print(f"錯誤: 找不到輸入資料夾 '{INPUT_FOLDER}'")
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.mkdir(OUTPUT_FOLDER)
+    
+    process_all_files(INPUT_FOLDER,OUTPUT_FOLDER)
+    print("\n所有檔案處理完成！")

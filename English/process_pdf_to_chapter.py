@@ -2,6 +2,10 @@ import pdfplumber
 from collections import Counter
 import re
 import os
+import logging
+
+# 抑制 pdfminer.pdffont 的警告訊息
+logging.getLogger('pdfminer.pdffont').setLevel(logging.ERROR)
 
 # 設定字體大小閾值
 FONT_SIZE_THRESHOLD = 15
@@ -191,5 +195,11 @@ def process_pdf_to_chapters(pdf_path,output_dir):
     save_chapter(output_dir,numbered_filename, current_paragraphs)
 
 if __name__=='__main__':
-    output_dir = "output_text_EN"
-    process_pdf_to_chapters(r"/home/user/paul-cleavedata/BOOK/PAUL CLEAVE_EN/Trust_No_One.pdf",output_dir)
+    input_pdf = r"/paul-cleavedata/BOOK/PAUL CLEAVE_EN/Trust_No_One.pdf"
+    OUTPUT_FOLDER = "output_text_EN"
+
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.mkdir(OUTPUT_FOLDER)
+    
+    process_pdf_to_chapters(input_pdf,OUTPUT_FOLDER)
+    print("\n所有檔案處理完成！")

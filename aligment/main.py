@@ -52,8 +52,8 @@ if __name__ == "__main__":
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
 
-    EN_dir = r'/home/user/paul-cleavedata/English/output_text_EN'
-    ZH_dir = r'/home/user/paul-cleavedata/Chinese/output_text_ZH'
+    EN_dir = r'/paul-cleavedata/English/output_text_EN'
+    ZH_dir = r'/paul-cleavedata/Chinese/output_text_ZH'
     
     '''
     兩份資料夾中要處裡的檔案開頭序號為001_,...,038_
