@@ -12,7 +12,7 @@ print(f"Running on: {device}")
 if device == "cuda":
     spacy.prefer_gpu()
 
-# 載入 SpaCy 模型
+# 載入 SpaCy 模型 split_sentences_spacy()傳入參數模型
 print("Loading SpaCy...")
 nlp_en = spacy.load("en_core_web_sm") # 或 trf 版本
 nlp_zh = spacy.load("zh_core_web_sm") # 或 trf 版本
@@ -63,8 +63,9 @@ if __name__ == "__main__":
 
     for i, (en_chapter_path, zh_chapter_path) in enumerate(book_chapter_pairs):
         output_file_name = os.path.join(dir_path, f'aligned_ch{i}.jsonl')
-        process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,align_sentences_function,model)
         process_chapter_alignment(
+            nlp_en=nlp_en,
+            nlp_zh=nlp_zh,
             en_chapter_path=en_chapter_path, 
             zh_chapter_path=zh_chapter_path, 
             output_path=output_file_name, 

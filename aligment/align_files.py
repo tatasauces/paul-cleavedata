@@ -42,7 +42,15 @@ def create_file_pairs(dir_en, dir_zh):
 
 
 def split_sentences_spacy(nlp_en,nlp_zh,text, lang='en'):
-    """使用 Spacy 進行斷句"""
+    """
+    使用 Spacy 進行斷句
+    args:
+    nlp_en : spacy.load("en_core_web_sm")
+    nlp_zh : spacy.load("zh_core_web_sm")
+
+    return:
+    list of sentences
+    """
     if not text or not text.strip():
         return []
 
@@ -54,7 +62,7 @@ def split_sentences_spacy(nlp_en,nlp_zh,text, lang='en'):
     # 過濾掉過短的句子或純符號
     return [sent.text.strip() for sent in doc.sents if len(sent.text.strip()) > 1]
 
-def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,align_sentences_function,model,device):
+def process_chapter_alignment(nlp_en,nlp_zh,en_chapter_path, zh_chapter_path, output_path,align_sentences_function,model,device):
     """
     執行分層對齊：章節 -> 段落 -> 句子
 
@@ -99,8 +107,8 @@ def process_chapter_alignment(en_chapter_path, zh_chapter_path, output_path,alig
         p_zh_text = para_pair['zh']
 
         # 使用 Spacy 斷句
-        sents_en = split_sentences_spacy(p_en_text, 'en')
-        sents_zh = split_sentences_spacy(p_zh_text, 'zh')
+        sents_en = split_sentences_spacy(nlp_en,nlp_zhp_en_text, 'en')
+        sents_zh = split_sentences_spacy(nlp_en,nlp_zh,p_zh_text, 'zh')
 
         # 如果任一方斷句後為空，跳過
         if not sents_en or not sents_zh:
