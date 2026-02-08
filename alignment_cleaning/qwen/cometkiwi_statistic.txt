@@ -1,0 +1,15 @@
+=== Descriptive Statistics ===
+count    4270.000000
+mean        0.817190
+std         0.062878
+min         0.553296
+5%          0.680298
+10%         0.726162
+25%         0.796257
+50%         0.837065
+75%         0.860859
+90%         0.874661
+95%         0.879967
+max         0.899920
+Name: comet_score, dtype: float64
+Suggested Threshold (Mean - 1.5*Std): 0.7229
