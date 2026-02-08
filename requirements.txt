@@ -1,7 +1,3 @@
-huggingface_hub>=0.20.0
-transformers>=4.40.0
-accelerate>=0.30.0
-python-dotenv
 pdfplumber
 spacy
 sentence_transformers
@@ -9,6 +5,12 @@ torch
 matplotlib
 seaborn
 tqdm
-numpy==1.26.4
-protobuf==5.29.1
-unbabel-comet>=2.0.0
+python-dotenv
+# 核心庫使用範圍限制，增加成功率
+huggingface_hub>=0.17.0
+transformers>=4.40.0
+accelerate>=0.30.0
+# 放寬 protobuf 限制，通常 4.25.x 是目前最穩定的過渡版本
+protobuf>=4.25.0,<6.0.0
+unbabel-comet>=2.1.0
+numpy>=1.26.4,<2.0.0
