@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from comet import download_model, load_from_checkpoint
 from tqdm import tqdm
-from hugging_hub import login
+from huggingface_hub import login
 from dotenv import load_dotenv
 
 # ================= 設定區 =================
