@@ -2,3 +2,12 @@ pdfplumber
 spacy
 sentence_transformers
 torch
+matplotlib
+seaborn
+tqdm
+python-dotenv
+huggingface_hub
+#for auto check sentence pairs
+numpy==1.26.4 # Pinned to a version compatible with unbabel-comet, tensorflow, and numba
+protobuf==5.29.1 # Pinned to a version compatible with grain and ydf
+unbabel-comet>=2.0.0
