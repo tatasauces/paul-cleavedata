@@ -19,34 +19,46 @@ BATCH_SIZE = 128  # GPU 顯存越大，可以設越大 (32, 64, 128)
 
 def load_data(folder_path):
     """
-    載入資料夾下所有 JSON 檔案，並轉換格式
+    載入資料夾下所有 JSONL 檔案 (.jsonl)，並轉換格式
     """
-    json_files = glob.glob(os.path.join(folder_path, "*.json")) # 或 .jsonl
+    # 修改 1: 明確搜尋 .jsonl 結尾的檔案
+    json_files = glob.glob(os.path.join(folder_path, "*.jsonl"))
+    
     all_samples = []
     
-    print(f"Found {len(json_files)} files in {folder_path}")
+    print(f"Found {len(json_files)} .jsonl files in {folder_path}")
+    
+    if not json_files:
+        print("Warning: No .jsonl files found! Please check your folder path or extension.")
+        return []
     
     for file_path in tqdm(json_files, desc="Loading files"):
         file_name = os.path.basename(file_path)
         with open(file_path, 'r', encoding='utf-8') as f:
-            # 假設每個檔案是 JSONL (一行一個 json object)
-            # 如果是單個大 JSON list，請改用 json.load(f)
-            for line in f:
-                if not line.strip(): continue
+            # JSONL 讀取方式：逐行讀取
+            for line_idx, line in enumerate(f):
+                line = line.strip()
+                if not line: 
+                    continue
                 try:
                     record = json.loads(line)
+                    
                     # 轉換為 COMET 需要的 key: src (來源), mt (機器翻譯/目標)
-                    # 同時保留原始 metadata 以便追蹤
                     sample = {
                         "src": record.get("en", ""),
                         "mt": record.get("zh", ""),
-                        "labse_score": record.get("score", 0),
+                        "labse_score": record.get("score", 0), # 保留原始 LaBSE 分數
                         "type": record.get("type", "unknown"),
-                        "source_file": file_name
+                        "source_file": file_name,
+                        "line_idx": line_idx  # 建議保留行號，方便日後回去找原始檔案
                     }
-                    if sample["src"] and sample["mt"]: # 確保非空
+                    
+                    # 簡單過濾空字串
+                    if sample["src"] and sample["mt"]: 
                         all_samples.append(sample)
+                        
                 except json.JSONDecodeError:
+                    print(f"Error parsing JSON in {file_name} at line {line_idx}")
                     continue
                     
     print(f"Total samples loaded: {len(all_samples)}")
