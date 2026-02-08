@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 INPUT_FOLDER = "/aligment/pairs_sentence"  # 你的 json 檔案存放資料夾
 OUTPUT_FILE = "alignment_scores_full.csv" # 儲存所有分數的結果
 PLOT_FILE = "score_distribution.png"      # 儲存分佈圖的圖片路徑
-BATCH_SIZE = 64  # GPU 顯存越大，可以設越大 (32, 64, 128)
+BATCH_SIZE = 128  # GPU 顯存越大，可以設越大 (32, 64, 128)
 # =========================================
 
 def load_data(folder_path):
@@ -62,7 +62,7 @@ def run_comet_inference(samples):
         login(token=hf_token)
     else:
         print("錯誤：找不到 HUGGINGFACE_TOKEN，請檢查 .env 檔案")
-        
+
     print("Loading CometKiwi model (Quality Estimation)...")
     # 下載並載入無參考模型 (Reference-Free)
     model_path = download_model("Unbabel/wmt22-cometkiwi-da")

@@ -1,3 +1,7 @@
+huggingface_hub>=0.20.0
+transformers>=4.40.0
+accelerate>=0.30.0
+python-dotenv
 pdfplumber
 spacy
 sentence_transformers
@@ -5,9 +9,6 @@ torch
 matplotlib
 seaborn
 tqdm
-python-dotenv
-huggingface_hub
-#for auto check sentence pairs
-numpy==1.26.4 # Pinned to a version compatible with unbabel-comet, tensorflow, and numba
-protobuf==5.29.1 # Pinned to a version compatible with grain and ydf
+numpy==1.26.4
+protobuf==5.29.1
 unbabel-comet>=2.0.0
