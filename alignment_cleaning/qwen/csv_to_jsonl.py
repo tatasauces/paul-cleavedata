@@ -2,8 +2,8 @@ import pandas as pd
 import os
 
 # ================= 設定區 =================
-INPUT_CSV = "/paul-cleavedata/alignment_cleaning/cometkiwi/alignment_scores_full.csv"   # 你的 CSV 檔案路徑
-OUTPUT_JSONL = "/paul-cleavedata/alignment_cleaning/qwen/alignment_scores_full.jsonl" # 輸出的 JSONL 檔案路徑
+INPUT_CSV = "paul-cleavedata/alignment_cleaning/cometkiwi/alignment_scores_full.csv"   # 你的 CSV 檔案路徑
+OUTPUT_JSONL = "paul-cleavedata/alignment_cleaning/qwen/alignment_scores_full.jsonl" # 輸出的 JSONL 檔案路徑
 # =========================================
 
 def csv_to_jsonl(input_path, output_path):

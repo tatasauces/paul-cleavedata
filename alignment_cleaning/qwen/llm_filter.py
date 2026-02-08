@@ -9,7 +9,7 @@ CHECK_THRESHOLD_MIN = 0.55
 CHECK_THRESHOLD_MAX = 0.80
 
 MODEL_ID = "Qwen/Qwen3-4B-Instruct-2507"
-INPUT_DATA = "/paul-cleavedata/alignment_cleaning/qwen/alignment_scores_full.jsonl" 
+INPUT_DATA = "paul-cleavedata/alignment_cleaning/qwen/alignment_scores_full.jsonl" 
 OUTPUT_FILE = "paul-cleavedata/alignment_cleaning/qwen/final_cleaned_pairs.jsonl"
 # =========================================
 
