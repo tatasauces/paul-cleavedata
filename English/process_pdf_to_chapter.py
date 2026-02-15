@@ -195,7 +195,7 @@ def process_pdf_to_chapters(pdf_path,output_dir):
     save_chapter(output_dir,numbered_filename, current_paragraphs)
 
 if __name__=='__main__':
-    input_pdf = r"/paul-cleavedata/BOOK/PAUL CLEAVE_EN/Trust_No_One.pdf"
+    input_pdf = r"/home/user/paul-cleavedata/BOOK/PAUL CLEAVE_EN/Trust_No_One.pdf"
     OUTPUT_FOLDER = "output_text_EN"
 
     if not os.path.exists(OUTPUT_FOLDER):
